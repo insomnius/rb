@@ -2,10 +2,10 @@ package ruby
 
 type String string
 
-func (s String) Chars() Array[string] {
-	chars := make([]string, len(s))
+func (s String) Chars() Array[String] {
+	chars := make([]String, len(s))
 	for _, c := range s {
-		chars = append(chars, string(c))
+		chars = append(chars, String(c))
 	}
 	return chars
 }
