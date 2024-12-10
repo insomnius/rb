@@ -30,8 +30,9 @@ func (s String) Downcase() String {
 	return String(strings.ToLower(string(s)))
 }
 
-func (s *String) DowncaseBang() {
+func (s *String) EnforceDowncase() String {
 	*s = s.Downcase()
+	return *s
 }
 
 func (s String) Upcase() String {
