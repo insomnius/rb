@@ -12,6 +12,24 @@ Welcome to `rb`, where the simplicity and elegance of Ruby meet the performance 
 - Ruby-style `Array` with enhanced methods like `count`.
 - Seamless integration into your Go projects with idiomatic Go practices.
 
+## Ruby-like Idiomatic Changes
+
+In `rb-go`, the following Ruby-like method semantics have been adapted to Go's idiomatic patterns:
+
+- `!` → **`Enforce`**: Methods with Ruby's "bang" `!` suffix are now implemented with `Enforce`.
+  Example:
+  ```go
+  str.EnforceDowncase()
+  ```
+
+- `?` → **`Is`**: Methods with Ruby's "question" `?` suffix are now implemented with `Is`.
+  Example:
+  ```go
+  5.IsOdd()
+  ```
+
+These changes ensure alignment with Go's naming conventions while maintaining Ruby's expressiveness.
+
 ## Installation
 
 ```bash
