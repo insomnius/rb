@@ -28,6 +28,7 @@ func (a Array[T]) Count(args ...CountArrayArg[T]) Integer {
 		return Integer(tot)
 	case func(T) bool:
 		tot := 0
+
 		for _, v := range a {
 			if needle(v) {
 				tot++
