@@ -1,15 +1,21 @@
 package rb
 
-type Array[T comparable] []T
+type Array[T String | Int] []T
+type CountArrayArg[T String | Int] any
 
-type CountArrayArg[T comparable] interface {
-	any | func(T) bool
-}
+func (a Array[T]) Count(args ...CountArrayArg[T]) Int {
+	if len(args) == 0 {
+		return Int(len(a))
+	}
 
-func (a Array[T]) Count(arg CountArrayArg[T]) Int {
+	arg := args[0]
 	switch needle := arg.(type) {
 	case nil:
 		return Int(len(a))
+	case string:
+		return a.Count(String(needle))
+	case int:
+		return a.Count(Int(needle))
 	case T:
 		tot := 0
 
@@ -29,6 +35,6 @@ func (a Array[T]) Count(arg CountArrayArg[T]) Int {
 		}
 		return Int(tot)
 	default:
-		return Int(len(a))
+		return 0
 	}
 }
