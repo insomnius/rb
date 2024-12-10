@@ -28,6 +28,14 @@ func (s String) Downcase() String {
 	return String(strings.ToLower(string(s)))
 }
 
+func (s *String) DowncaseBang() {
+	*s = s.Downcase()
+}
+
 func (s String) Upcase() String {
 	return String(strings.ToUpper(string(s)))
+}
+
+func (s *String) UpcaseBang() {
+	*s = s.Upcase()
 }
