@@ -1,5 +1,7 @@
 package ruby
 
+import "strings"
+
 type String string
 
 func (s String) Chars() Array[String] {
@@ -12,4 +14,20 @@ func (s String) Chars() Array[String] {
 
 func (s String) Length() Int {
 	return Int(len(s))
+}
+
+func (s String) ToS() String {
+	return s
+}
+
+func (s String) ToStr() String {
+	return s.ToS()
+}
+
+func (s String) Downcase() String {
+	return String(strings.ToLower(string(s)))
+}
+
+func (s String) Upcase() String {
+	return String(strings.ToUpper(string(s)))
 }
