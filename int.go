@@ -1,3 +1,3 @@
-package ruby
+package rb
 
 type Int int

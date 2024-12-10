@@ -1,4 +1,4 @@
-package ruby
+package rb
 
 import "strings"
 
