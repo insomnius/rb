@@ -14,8 +14,8 @@ func (s String) Chars() Array[String] {
 	return chars
 }
 
-func (s String) Length() Int {
-	return Int(len(s))
+func (s String) Length() Integer {
+	return Integer(len(s))
 }
 
 func (s String) ToS() String {
