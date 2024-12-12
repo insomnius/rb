@@ -17,6 +17,21 @@ func (s String) Chars() Array[String] {
 	return chars
 }
 
+// Downcase returns a new String with all characters converted to lowercase.
+// Example: String("Hello").Downcase() -> "hello"
+func (s String) Downcase() String {
+	return String(strings.ToLower(string(s)))
+}
+
+// EnforceDowncase converts the String to lowercase in place and returns it.
+// Example:
+// str := String("Hello")
+// str.EnforceDowncase() // str is now "hello"
+func (s *String) EnforceDowncase() String {
+	*s = s.Downcase()
+	return *s
+}
+
 // Length returns the length of the String as an Integer.
 // Example: String("hello").Length() -> 5
 func (s String) Length() Integer {
@@ -35,19 +50,13 @@ func (s String) ToStr() String {
 	return s.ToS()
 }
 
-// Downcase returns a new String with all characters converted to lowercase.
-// Example: String("Hello").Downcase() -> "hello"
-func (s String) Downcase() String {
-	return String(strings.ToLower(string(s)))
-}
-
-// EnforceDowncase converts the String to lowercase in place and returns it.
-// Example:
-// str := String("Hello")
-// str.EnforceDowncase() // str is now "hello"
-func (s *String) EnforceDowncase() String {
-	*s = s.Downcase()
-	return *s
+func (s String) Split(sep String) Array[String] {
+	splittedString := strings.Split(string(s), string(sep))
+	arr := make(Array[String], len(splittedString))
+	for k, v := range splittedString {
+		arr[k] = String(v)
+	}
+	return arr
 }
 
 // Upcase returns a new String with all characters converted to uppercase.

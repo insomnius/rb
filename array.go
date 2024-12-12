@@ -18,12 +18,7 @@ type CountArrayArg[T String | Integer | Boolean] any
 // a.Count()                  // -> 3
 // a.Count(String("a"))       // -> 2
 // a.Count(func(s String) bool { return s == "b" }) // -> 1
-func (a Array[T]) Count(args ...CountArrayArg[T]) Integer {
-	if len(args) == 0 {
-		return Integer(len(a))
-	}
-
-	arg := args[0]
+func (a Array[T]) Count(arg CountArrayArg[T]) Integer {
 	switch needle := arg.(type) {
 	case nil:
 		return Integer(len(a))
