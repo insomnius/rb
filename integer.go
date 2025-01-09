@@ -9,3 +9,7 @@ type Integer int
 func (i Integer) IsOdd() Boolean {
 	return i%2 == 1
 }
+
+func (i Integer) IsEven() Boolean {
+	return i%2 == 0
+}
