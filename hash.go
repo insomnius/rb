@@ -30,15 +30,6 @@ func (h Hash[K, V]) HasKey(key K) Boolean {
 	return Boolean(exists)
 }
 
-// HasValue checks if the Hash contains the given value.
-// Note: This method is simplified and may not work for all types.
-// Example: Hash[string, int]{"a": 1}.HasValue(1) -> true
-func (h Hash[K, V]) HasValue(value V) Boolean {
-	// Note: This is a simplified implementation
-	// In practice, you'd want to use reflect.DeepEqual or custom comparators
-	return false
-}
-
 // Get retrieves the value for the given key, returning a default value if the key doesn't exist.
 // Example: Hash[string, int]{"a": 1}.Get("b", 0) -> 0
 func (h Hash[K, V]) Get(key K, defaultValue V) V {
@@ -100,17 +91,17 @@ func (h Hash[K, V]) IsEmpty() Boolean {
 // Example: Hash[string, int]{"a": 1}.Merge(Hash[string, int]{"b": 2}) -> {"a": 1, "b": 2}
 func (h Hash[K, V]) Merge(other Hash[K, V]) Hash[K, V] {
 	result := make(Hash[K, V])
-	
+
 	// Copy current hash
 	for k, v := range h {
 		result[k] = v
 	}
-	
+
 	// Merge other hash
 	for k, v := range other {
 		result[k] = v
 	}
-	
+
 	return result
 }
 
@@ -188,19 +179,6 @@ func (h Hash[K, V]) Invert() Hash[any, any] {
 	for k, v := range h {
 		result[v] = k
 	}
-	return result
-}
-
-// Default returns the default value for keys that don't exist.
-// Example: Hash[string, int]{"a": 1}.Default(0)
-func (h Hash[K, V]) Default(defaultValue V) Hash[K, V] {
-	result := make(Hash[K, V])
-	for k, v := range h {
-		result[k] = v
-	}
-	
-	// Note: This is a simplified implementation
-	// In practice, you'd want to handle defaults differently
 	return result
 }
 

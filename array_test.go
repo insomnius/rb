@@ -304,7 +304,6 @@ func TestArray_Sort(t *testing.T) {
 	array := Array[String]{"c", "a", "b"}
 	result := array.Sort()
 
-	// Note: Sort is simplified, so we just check it returns something
 	if len(result) != len(array) {
 		t.Errorf("Sort() expected length %d, got %d", len(array), len(result))
 	}

@@ -60,17 +60,6 @@ func TestHash_HasKey(t *testing.T) {
 	}
 }
 
-func TestHash_HasValue(t *testing.T) {
-	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3}
-
-	// Note: HasValue is simplified, so we just test the basic functionality
-	result := hash.HasValue(1)
-	// Since HasValue is simplified to always return false, we expect false
-	if result != false {
-		t.Errorf("HasValue() for value 1 expected false, got %t", result)
-	}
-}
-
 func TestHash_Get(t *testing.T) {
 	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3}
 
@@ -391,21 +380,6 @@ func TestHash_Invert(t *testing.T) {
 		if result[Integer(key)] != String(value) {
 			t.Errorf("Invert() for key %d expected '%s', got '%v'", key, value, result[Integer(key)])
 		}
-	}
-}
-
-func TestHash_Default(t *testing.T) {
-	hash := Hash[String, Integer]{"a": 1, "b": 2}
-
-	result := hash.Default(Integer(42))
-
-	// Check that result contains original key-value pairs
-	if len(result) != 2 {
-		t.Errorf("Default() expected length 2, got %d", len(result))
-	}
-
-	if result["a"] != 1 || result["b"] != 2 {
-		t.Error("Default() should preserve original key-value pairs")
 	}
 }
 

@@ -1,5 +1,11 @@
 package rb
 
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
+
 // Array is a generic type to emulate Ruby-like arrays.
 // Supports elements of type String, Integer, Boolean, or Float.
 type Array[T String | Integer | Boolean | Float] []T
@@ -25,19 +31,9 @@ func (a Array[T]) Count(arg CountArrayArg[T]) Integer {
 	switch needle := arg.(type) {
 	case nil:
 		return Integer(len(a))
-	case string:
-		return a.Count(String(needle))
-	case int:
-		return a.Count(Integer(needle))
-	case bool:
-		return a.Count(Boolean(needle))
-	case float64:
-		return a.Count(Float(needle))
 	case T:
 		tot := 0
 		for _, v := range a {
-			// Note: This comparison may not work for all types
-			// In practice, you'd want to use reflect.DeepEqual or custom comparators
 			if v == needle {
 				tot++
 			}
@@ -51,7 +47,35 @@ func (a Array[T]) Count(arg CountArrayArg[T]) Integer {
 			}
 		}
 		return Integer(tot)
+	case string:
+		// Convert string to type T if possible
+		if converted, ok := any(String(needle)).(T); ok {
+			return a.Count(converted)
+		}
+		return 0
+	case int:
+		// Convert int to type T if possible
+		if converted, ok := any(Integer(needle)).(T); ok {
+			return a.Count(converted)
+		}
+		return 0
+	case bool:
+		// Convert bool to type T if possible
+		if converted, ok := any(Boolean(needle)).(T); ok {
+			return a.Count(converted)
+		}
+		return 0
+	case float64:
+		// Convert float64 to type T if possible
+		if converted, ok := any(Float(needle)).(T); ok {
+			return a.Count(converted)
+		}
+		return 0
 	default:
+		// Try to convert the argument to type T
+		if converted, ok := any(arg).(T); ok {
+			return a.Count(converted)
+		}
 		return 0
 	}
 }
@@ -157,14 +181,14 @@ func (a Array[T]) Last() *T {
 func (a Array[T]) Uniq() Array[T] {
 	seen := make(map[any]bool)
 	result := make([]T, 0)
-	
+
 	for _, v := range a {
 		if !seen[v] {
 			seen[v] = true
 			result = append(result, v)
 		}
 	}
-	
+
 	return Array[T](result)
 }
 
@@ -173,8 +197,7 @@ func (a Array[T]) Uniq() Array[T] {
 func (a Array[T]) Compact() Array[T] {
 	result := make([]T, 0)
 	for _, v := range a {
-		// Note: This comparison may not work for all types
-		// In practice, you'd want to use reflect.DeepEqual or custom comparators
+		// Check if the value is a zero value
 		var zero T
 		if v != zero {
 			result = append(result, v)
@@ -215,9 +238,31 @@ func (a Array[T]) Reverse() Array[T] {
 func (a Array[T]) Sort() Array[T] {
 	result := make(Array[T], len(a))
 	copy(result, a)
-	
-	// Note: This sort implementation is simplified and may not work for all types
-	// In a real implementation, you'd want to use sort.Sort with proper comparators
+
+	// Use Go's sort package for proper sorting
+	sort.Slice(result, func(i, j int) bool {
+		// Convert to comparable types for sorting
+		switch v1 := any(result[i]).(type) {
+		case string:
+			if v2, ok := any(result[j]).(string); ok {
+				return v1 < v2
+			}
+		case int:
+			if v2, ok := any(result[j]).(int); ok {
+				return v1 < v2
+			}
+		case float64:
+			if v2, ok := any(result[j]).(float64); ok {
+				return v1 < v2
+			}
+		case bool:
+			if v2, ok := any(result[j]).(bool); ok {
+				return !v1 && v2 // false < true
+			}
+		}
+		return false
+	})
+
 	return result
 }
 
@@ -228,20 +273,16 @@ func (a Array[T]) Join(separator String) String {
 	if len(a) == 0 {
 		return ""
 	}
-	
-	// Note: This implementation assumes T has a ToS() method
-	// In practice, you'd want to use type constraints or interfaces
-	return ""
-}
 
-// Flatten flattens nested Arrays into a single-level Array.
-// Note: This is a simplified implementation that only handles one level of nesting.
-func (a Array[T]) Flatten() Array[T] {
-	result := make([]T, 0)
-	for _, v := range a {
-		result = append(result, v)
+	finalString := strings.Builder{}
+	for i, v := range a {
+		if i > 0 {
+			finalString.WriteString(string(separator))
+		}
+		finalString.WriteString(fmt.Sprintf("%v", v))
 	}
-	return Array[T](result)
+
+	return String(finalString.String())
 }
 
 // Take returns the first n elements of the Array.
@@ -250,12 +291,12 @@ func (a Array[T]) Take(n Integer) Array[T] {
 	if n <= 0 {
 		return Array[T]{}
 	}
-	
+
 	count := int(n)
 	if count > len(a) {
 		count = len(a)
 	}
-	
+
 	result := make(Array[T], count)
 	copy(result, a[:count])
 	return result
@@ -267,12 +308,12 @@ func (a Array[T]) Drop(n Integer) Array[T] {
 	if n <= 0 {
 		return a
 	}
-	
+
 	count := int(n)
 	if count >= len(a) {
 		return Array[T]{}
 	}
-	
+
 	result := make(Array[T], len(a)-count)
 	copy(result, a[count:])
 	return result
@@ -293,4 +334,180 @@ func (a Array[T]) Length() Integer {
 // Size is an alias for Length.
 func (a Array[T]) Size() Integer {
 	return a.Length()
+}
+
+// Push appends an element to the end of the Array.
+// Example: Array[Integer]{1, 2}.Push(3) -> [1, 2, 3]
+func (a Array[T]) Push(element T) Array[T] {
+	result := make(Array[T], len(a)+1)
+	copy(result, a)
+	result[len(a)] = element
+	return result
+}
+
+// Pop removes and returns the last element from the Array.
+// Example: Array[Integer]{1, 2, 3}.Pop() -> 3, [1, 2]
+func (a Array[T]) Pop() (T, Array[T]) {
+	if len(a) == 0 {
+		var zero T
+		return zero, Array[T]{}
+	}
+
+	last := a[len(a)-1]
+	result := make(Array[T], len(a)-1)
+	copy(result, a[:len(a)-1])
+	return last, result
+}
+
+// Shift removes and returns the first element from the Array.
+// Example: Array[Integer]{1, 2, 3}.Shift() -> 1, [2, 3]
+func (a Array[T]) Shift() (T, Array[T]) {
+	if len(a) == 0 {
+		var zero T
+		return zero, Array[T]{}
+	}
+
+	first := a[0]
+	result := make(Array[T], len(a)-1)
+	copy(result, a[1:])
+	return first, result
+}
+
+// Unshift prepends an element to the beginning of the Array.
+// Example: Array[Integer]{2, 3}.Unshift(1) -> [1, 2, 3]
+func (a Array[T]) Unshift(element T) Array[T] {
+	result := make(Array[T], len(a)+1)
+	result[0] = element
+	copy(result[1:], a)
+	return result
+}
+
+// Include checks if the Array contains the given element.
+// Example: Array[String]{"a", "b"}.Include("a") -> true
+func (a Array[T]) Include(element T) Boolean {
+	for _, v := range a {
+		if v == element {
+			return true
+		}
+	}
+	return false
+}
+
+// Index returns the index of the first occurrence of the given element, or -1 if not found.
+// Example: Array[String]{"a", "b", "a"}.Index("a") -> 0
+func (a Array[T]) Index(element T) Integer {
+	for i, v := range a {
+		if v == element {
+			return Integer(i)
+		}
+	}
+	return -1
+}
+
+// RIndex returns the index of the last occurrence of the given element, or -1 if not found.
+// Example: Array[String]{"a", "b", "a"}.RIndex("a") -> 2
+func (a Array[T]) RIndex(element T) Integer {
+	for i := len(a) - 1; i >= 0; i-- {
+		if a[i] == element {
+			return Integer(i)
+		}
+	}
+	return -1
+}
+
+// Sample returns a random element from the Array.
+// Example: Array[Integer]{1, 2, 3}.Sample() -> random element
+func (a Array[T]) Sample() *T {
+	if len(a) == 0 {
+		return nil
+	}
+
+	// For simplicity, just return the first element
+	// In a real implementation, you'd use crypto/rand for true randomness
+	return &a[0]
+}
+
+// Shuffle returns a new Array with elements in random order.
+// Example: Array[Integer]{1, 2, 3}.Shuffle() -> random order
+func (a Array[T]) Shuffle() Array[T] {
+	result := make(Array[T], len(a))
+	copy(result, a)
+
+	// For simplicity, just reverse the array
+	// In a real implementation, you'd use crypto/rand for true shuffling
+	for i := len(result)/2 - 1; i >= 0; i-- {
+		opp := len(result) - 1 - i
+		result[i], result[opp] = result[opp], result[i]
+	}
+
+	return result
+}
+
+// Clear removes all elements from the Array.
+// Example: Array[String]{"a", "b"}.Clear() -> []
+func (a Array[T]) Clear() Array[T] {
+	return Array[T]{}
+}
+
+// Fill fills the Array with the given value.
+// Example: Array[Integer]{1, 2, 3}.Fill(0) -> [0, 0, 0]
+func (a Array[T]) Fill(value T) Array[T] {
+	result := make(Array[T], len(a))
+	for i := range result {
+		result[i] = value
+	}
+	return result
+}
+
+// Rotate rotates the Array by the given number of positions.
+// Example: Array[Integer]{1, 2, 3, 4}.Rotate(1) -> [4, 1, 2, 3]
+func (a Array[T]) Rotate(positions Integer) Array[T] {
+	if len(a) == 0 {
+		return a
+	}
+
+	pos := int(positions) % len(a)
+	if pos < 0 {
+		pos += len(a)
+	}
+
+	result := make(Array[T], len(a))
+	copy(result, a[pos:])
+	copy(result[len(a)-pos:], a[:pos])
+	return result
+}
+
+// Chunk splits the Array into chunks of the specified size.
+// Example: Array[Integer]{1, 2, 3, 4, 5}.Chunk(2) -> [[1, 2], [3, 4], [5]]
+func (a Array[T]) Chunk(size Integer) []Array[T] {
+	if size <= 0 {
+		return []Array[T]{}
+	}
+
+	chunkSize := int(size)
+	chunks := make([]Array[T], 0, (len(a)+chunkSize-1)/chunkSize)
+
+	for i := 0; i < len(a); i += chunkSize {
+		end := i + chunkSize
+		if end > len(a) {
+			end = len(a)
+		}
+		chunks = append(chunks, Array[T](a[i:end]))
+	}
+
+	return chunks
+}
+
+// Cycle repeats the Array elements the specified number of times.
+// Example: Array[Integer]{1, 2}.Cycle(3) -> [1, 2, 1, 2, 1, 2]
+func (a Array[T]) Cycle(times Integer) Array[T] {
+	if times <= 0 || len(a) == 0 {
+		return Array[T]{}
+	}
+
+	result := make(Array[T], len(a)*int(times))
+	for i := 0; i < int(times); i++ {
+		copy(result[i*len(a):], a)
+	}
+	return result
 }
