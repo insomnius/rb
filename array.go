@@ -1,15 +1,15 @@
 package rb
 
 // Array is a generic type to emulate Ruby-like arrays.
-// Supports elements of type String, Integer, Boolean, Float, or Symbol.
-type Array[T String | Integer | Boolean | Float | Symbol] []T
+// Supports elements of type String, Integer, Boolean, or Float.
+type Array[T String | Integer | Boolean | Float] []T
 
 // AnyArray is an array type that supports any values.
 type AnyArray []any
 
 // CountArrayArg defines the valid argument types for the Count method.
 // It can be an element of the Array's type or a predicate function that returns a Boolean.
-type CountArrayArg[T String | Integer | Boolean | Float | Symbol] any
+type CountArrayArg[T String | Integer | Boolean | Float] any
 
 // Count returns the count of elements in the Array based on the provided argument:
 // - If no arguments are given, it returns the total number of elements in the Array.
