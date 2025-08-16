@@ -51,11 +51,11 @@ func TestString_Downcase(t *testing.T) {
 func TestString_EnforceDowncase(t *testing.T) {
 	str := String("Hello")
 	result := str.EnforceDowncase()
-	
+
 	if result != String("hello") {
 		t.Errorf("EnforceDowncase() expected 'hello', got '%s'", result)
 	}
-	
+
 	if str != String("hello") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -83,7 +83,7 @@ func TestString_Length(t *testing.T) {
 func TestString_ToS(t *testing.T) {
 	input := String("hello")
 	result := input.ToS()
-	
+
 	if result != input {
 		t.Errorf("ToS() expected '%s', got '%s'", input, result)
 	}
@@ -92,7 +92,7 @@ func TestString_ToS(t *testing.T) {
 func TestString_ToStr(t *testing.T) {
 	input := String("hello")
 	result := input.ToStr()
-	
+
 	if result != input {
 		t.Errorf("ToStr() expected '%s', got '%s'", input, result)
 	}
@@ -146,7 +146,7 @@ func TestString_Upcase(t *testing.T) {
 func TestString_UpcaseBang(t *testing.T) {
 	str := String("hello")
 	str.UpcaseBang()
-	
+
 	if str != String("HELLO") {
 		t.Errorf("UpcaseBang() expected 'HELLO', got '%s'", str)
 	}
@@ -175,11 +175,11 @@ func TestString_Capitalize(t *testing.T) {
 func TestString_EnforceCapitalize(t *testing.T) {
 	str := String("hello")
 	result := str.EnforceCapitalize()
-	
+
 	if result != String("Hello") {
 		t.Errorf("EnforceCapitalize() expected 'Hello', got '%s'", result)
 	}
-	
+
 	if str != String("Hello") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -208,11 +208,11 @@ func TestString_Strip(t *testing.T) {
 func TestString_EnforceStrip(t *testing.T) {
 	str := String("  hello  ")
 	result := str.EnforceStrip()
-	
+
 	if result != String("hello") {
 		t.Errorf("EnforceStrip() expected 'hello', got '%s'", result)
 	}
-	
+
 	if str != String("hello") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -241,11 +241,11 @@ func TestString_Reverse(t *testing.T) {
 func TestString_EnforceReverse(t *testing.T) {
 	str := String("hello")
 	result := str.EnforceReverse()
-	
+
 	if result != String("olleh") {
 		t.Errorf("EnforceReverse() expected 'olleh', got '%s'", result)
 	}
-	
+
 	if str != String("olleh") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -354,10 +354,10 @@ func TestString_Include(t *testing.T) {
 
 func TestString_Gsub(t *testing.T) {
 	tests := []struct {
-		input      String
-		pattern    String
+		input       String
+		pattern     String
 		replacement String
-		expected   String
+		expected    String
 	}{
 		{String("hello world"), String("o"), String("0"), String("hell0 w0rld")},
 		{String("hello"), String("l"), String("L"), String("heLLo")},
@@ -376,11 +376,11 @@ func TestString_Gsub(t *testing.T) {
 func TestString_EnforceGsub(t *testing.T) {
 	str := String("hello world")
 	result := str.EnforceGsub("o", "0")
-	
+
 	if result != String("hell0 w0rld") {
 		t.Errorf("EnforceGsub() expected 'hell0 w0rld', got '%s'", result)
 	}
-	
+
 	if str != String("hell0 w0rld") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -388,10 +388,10 @@ func TestString_EnforceGsub(t *testing.T) {
 
 func TestString_Sub(t *testing.T) {
 	tests := []struct {
-		input      String
-		pattern    String
+		input       String
+		pattern     String
 		replacement String
-		expected   String
+		expected    String
 	}{
 		{String("hello world"), String("o"), String("0"), String("hell0 world")},
 		{String("hello"), String("l"), String("L"), String("heLlo")},
@@ -410,11 +410,11 @@ func TestString_Sub(t *testing.T) {
 func TestString_EnforceSub(t *testing.T) {
 	str := String("hello world")
 	result := str.EnforceSub("o", "0")
-	
+
 	if result != String("hell0 world") {
 		t.Errorf("EnforceSub() expected 'hell0 world', got '%s'", result)
 	}
-	
+
 	if str != String("hell0 world") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -443,11 +443,11 @@ func TestString_Lstrip(t *testing.T) {
 func TestString_EnforceLstrip(t *testing.T) {
 	str := String("  hello")
 	result := str.EnforceLstrip()
-	
+
 	if result != String("hello") {
 		t.Errorf("EnforceLstrip() expected 'hello', got '%s'", result)
 	}
-	
+
 	if str != String("hello") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -476,11 +476,11 @@ func TestString_Rstrip(t *testing.T) {
 func TestString_EnforceRstrip(t *testing.T) {
 	str := String("hello  ")
 	result := str.EnforceRstrip()
-	
+
 	if result != String("hello") {
 		t.Errorf("EnforceRstrip() expected 'hello', got '%s'", result)
 	}
-	
+
 	if str != String("hello") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -509,11 +509,11 @@ func TestString_Swapcase(t *testing.T) {
 func TestString_EnforceSwapcase(t *testing.T) {
 	str := String("Hello World")
 	result := str.EnforceSwapcase()
-	
+
 	if result != String("hELLO wORLD") {
 		t.Errorf("EnforceSwapcase() expected 'hELLO wORLD', got '%s'", result)
 	}
-	
+
 	if str != String("hELLO wORLD") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}
@@ -541,11 +541,11 @@ func TestString_Title(t *testing.T) {
 func TestString_EnforceTitle(t *testing.T) {
 	str := String("hello world")
 	result := str.EnforceTitle()
-	
+
 	if result != String("Hello World") {
 		t.Errorf("EnforceTitle() expected 'Hello World', got '%s'", result)
 	}
-	
+
 	if str != String("Hello World") {
 		t.Errorf("String should be modified in place, got '%s'", str)
 	}

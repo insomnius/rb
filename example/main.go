@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("=== Ruby-like Methods in Go ===\n")
+	fmt.Println("=== Ruby-like Methods in Go ===")
 
 	// String methods
 	fmt.Println("--- String Methods ---")
@@ -208,34 +208,6 @@ func main() {
 	})
 
 	fmt.Println()
-
-	// Symbol methods
-	fmt.Println("--- Symbol Methods ---")
-	sym := rb.NewSymbol("hello123")
-	fmt.Printf("Symbol: %s\n", sym)
-	fmt.Printf("Length: %d\n", sym.Length())
-	fmt.Printf("IsEmpty: %t\n", sym.IsEmpty())
-	fmt.Printf("IsBlank: %t\n", sym.IsBlank())
-	fmt.Printf("IsPresent: %t\n", sym.IsPresent())
-	fmt.Printf("IsAlpha: %t\n", sym.IsAlpha())
-	fmt.Printf("IsAlphanumeric: %t\n", sym.IsAlphanumeric())
-	fmt.Printf("IsDigit: %t\n", sym.IsDigit())
-	fmt.Printf("IsNumeric: %t\n", sym.IsNumeric())
-	fmt.Printf("IsUpper: %t\n", sym.IsUpper())
-	fmt.Printf("IsLower: %t\n", sym.IsLower())
-
-	// Symbol transformation
-	fmt.Printf("Upcase: %s\n", sym.Upcase())
-	fmt.Printf("Downcase: %s\n", sym.Downcase())
-	fmt.Printf("Capitalize: %s\n", sym.Capitalize())
-	fmt.Printf("Title: %s\n", rb.NewSymbol("hello world").Title())
-	fmt.Printf("Reverse: %s\n", sym.Reverse())
-
-	// Symbol splitting
-	symWords := sym.Words()
-	fmt.Printf("Words: %v\n", symWords)
-	symChars := sym.Chars()
-	fmt.Printf("Chars: %v\n", symChars)
 
 	fmt.Println("\n=== All methods demonstrated successfully! ===")
 }

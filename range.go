@@ -6,8 +6,8 @@ import (
 
 // Range represents a range of values, similar to Ruby's Range class.
 type Range[T Integer | Float] struct {
-	Begin T
-	End   T
+	Begin     T
+	End       T
 	Exclusive bool // true for exclusive range (..), false for inclusive range (...)
 }
 
@@ -94,7 +94,7 @@ func (r Range[T]) Step(step T, fn func(T)) {
 	if step == 0 {
 		return
 	}
-	
+
 	if r.Begin <= r.End {
 		for i := r.Begin; i <= r.End; i += step {
 			if r.Exclusive && i >= r.End {
@@ -116,7 +116,7 @@ func (r Range[T]) Step(step T, fn func(T)) {
 // Example: NewRange(Integer(1), Integer(3)).ToArray() -> [1, 2, 3]
 func (r Range[T]) ToArray() Array[T] {
 	var result []T
-	
+
 	if r.Begin <= r.End {
 		for i := r.Begin; i <= r.End; i++ {
 			if r.Exclusive && i == r.End {
@@ -132,7 +132,7 @@ func (r Range[T]) ToArray() Array[T] {
 			result = append(result, i)
 		}
 	}
-	
+
 	return Array[T](result)
 }
 
@@ -160,10 +160,10 @@ func (r Range[T]) Length() Integer {
 // IsEmpty checks if the Range is empty.
 // Example: NewRange(Integer(5), Integer(1)).IsEmpty() -> true
 func (r Range[T]) IsEmpty() Boolean {
-	if r.Begin <= r.End {
-		return Boolean(r.Begin > r.End || (r.Exclusive && r.Begin == r.End))
+	if r.Begin > r.End {
+		return Boolean(true)
 	}
-	return Boolean(r.Begin < r.End || (r.Exclusive && r.Begin == r.End))
+	return Boolean(r.Exclusive && r.Begin == r.End)
 }
 
 // Min returns the minimum value in the Range.

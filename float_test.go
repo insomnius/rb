@@ -253,7 +253,7 @@ func TestFloat_ToS(t *testing.T) {
 func TestFloat_ToStr(t *testing.T) {
 	input := Float(3.14)
 	result := input.ToStr()
-	
+
 	if result != input.ToS() {
 		t.Errorf("ToStr() should return same as ToS()")
 	}
@@ -316,7 +316,8 @@ func TestFloat_Sin(t *testing.T) {
 
 	for _, test := range tests {
 		result := test.input.Sin()
-		if result != test.expected {
+		// Use approximate comparison for floating point precision
+		if math.Abs(float64(result-test.expected)) > 1e-10 {
 			t.Errorf("Sin() for %f expected %f, got %f", test.input, test.expected, result)
 		}
 	}
@@ -336,7 +337,8 @@ func TestFloat_Cos(t *testing.T) {
 
 	for _, test := range tests {
 		result := test.input.Cos()
-		if result != test.expected {
+		// Use approximate comparison for floating point precision
+		if math.Abs(float64(result-test.expected)) > 1e-10 {
 			t.Errorf("Cos() for %f expected %f, got %f", test.input, test.expected, result)
 		}
 	}
@@ -355,7 +357,8 @@ func TestFloat_Tan(t *testing.T) {
 
 	for _, test := range tests {
 		result := test.input.Tan()
-		if result != test.expected {
+		// Use approximate comparison for floating point precision
+		if math.Abs(float64(result-test.expected)) > 1e-10 {
 			t.Errorf("Tan() for %f expected %f, got %f", test.input, test.expected, result)
 		}
 	}
@@ -392,7 +395,8 @@ func TestFloat_Log10(t *testing.T) {
 
 	for _, test := range tests {
 		result := test.input.Log10()
-		if result != test.expected {
+		// Use approximate comparison for floating point precision
+		if math.Abs(float64(result-test.expected)) > 1e-10 {
 			t.Errorf("Log10() for %f expected %f, got %f", test.input, test.expected, result)
 		}
 	}

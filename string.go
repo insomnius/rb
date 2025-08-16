@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 // String is a custom string type to emulate Ruby-like behavior.
@@ -12,8 +13,9 @@ type String string
 // Chars splits the String into an Array of single-character Strings.
 // Example: String("hello").Chars() -> ["h", "e", "l", "l", "o"]
 func (s String) Chars() Array[String] {
-	chars := make([]String, len(s))
-	for k, c := range s {
+	runes := []rune(string(s))
+	chars := make([]String, len(runes))
+	for k, c := range runes {
 		chars[k] = String(c)
 	}
 	return chars
@@ -37,7 +39,7 @@ func (s *String) EnforceDowncase() String {
 // Length returns the length of the String as an Integer.
 // Example: String("hello").Length() -> 5
 func (s String) Length() Integer {
-	return Integer(len(s))
+	return Integer(utf8.RuneCountInString(string(s)))
 }
 
 // ToS returns the String itself, mimicking Ruby's to_s method.
@@ -158,6 +160,10 @@ func (s String) Include(substr String) Boolean {
 // Gsub performs global substitution, replacing all occurrences of a pattern with a replacement.
 // Example: String("hello world").Gsub("o", "0") -> "hell0 w0rld"
 func (s String) Gsub(pattern, replacement String) String {
+	// Special case: if both string and pattern are empty, return empty string
+	if len(s) == 0 && len(pattern) == 0 {
+		return String("")
+	}
 	return String(strings.ReplaceAll(string(s), string(pattern), string(replacement)))
 }
 
@@ -170,6 +176,10 @@ func (s *String) EnforceGsub(pattern, replacement String) String {
 // Sub performs substitution, replacing the first occurrence of a pattern with a replacement.
 // Example: String("hello world").Sub("o", "0") -> "hell0 world"
 func (s String) Sub(pattern, replacement String) String {
+	// Special case: if both string and pattern are empty, return empty string
+	if len(s) == 0 && len(pattern) == 0 {
+		return String("")
+	}
 	return String(strings.Replace(string(s), string(pattern), string(replacement), 1))
 }
 
@@ -226,7 +236,15 @@ func (s *String) EnforceSwapcase() String {
 // Title returns a new String with the first character of each word capitalized.
 // Example: String("hello world").Title() -> "Hello World"
 func (s String) Title() String {
-	return String(strings.Title(strings.ToLower(string(s))))
+	words := strings.Fields(string(s))
+	for i, word := range words {
+		if len(word) > 0 {
+			runes := []rune(word)
+			runes[0] = unicode.ToUpper(runes[0])
+			words[i] = string(runes)
+		}
+	}
+	return String(strings.Join(words, " "))
 }
 
 // EnforceTitle capitalizes the first character of each word in place and returns it.

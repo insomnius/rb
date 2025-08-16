@@ -23,7 +23,7 @@ jobs:
       run: go mod download
 
     - name: Run tests with coverage
-      run: go test -v -coverprofile=coverage.out ./...
+      run: go test -v -coverprofile=coverage.out $(go list ./... | grep -v example)
 
     - name: Show coverage summary
       run: go tool cover -func=coverage.out

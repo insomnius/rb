@@ -12,7 +12,7 @@ type Integer int
 // Example: Integer(3).IsOdd() -> true
 // Example: Integer(4).IsOdd() -> false
 func (i Integer) IsOdd() Boolean {
-	return Boolean(i%2 == 1)
+	return !i.IsEven()
 }
 
 func (i Integer) IsEven() Boolean {
@@ -155,7 +155,7 @@ func (i Integer) IsPrime() Boolean {
 	if i%2 == 0 {
 		return false
 	}
-	
+
 	limit := Integer(math.Sqrt(float64(i)))
 	for j := Integer(3); j <= limit; j += 2 {
 		if i%j == 0 {
@@ -174,7 +174,7 @@ func (i Integer) Factorial() Integer {
 	if i <= 1 {
 		return 1
 	}
-	
+
 	result := Integer(1)
 	for j := Integer(2); j <= i; j++ {
 		result *= j
@@ -207,20 +207,18 @@ func (i Integer) Divisors() Array[Integer] {
 	if i == 0 {
 		return Array[Integer]{}
 	}
-	
+
 	abs := i.Abs()
 	divisors := make([]Integer, 0)
-	
+
 	for j := Integer(1); j <= abs; j++ {
 		if abs%j == 0 {
 			divisors = append(divisors, j)
 		}
 	}
-	
+
 	result := make(Array[Integer], len(divisors))
-	for k, v := range divisors {
-		result[k] = v
-	}
+	copy(result, divisors)
 	return result
 }
 
