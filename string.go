@@ -242,7 +242,7 @@ func (s String) Title() String {
 			continue
 		}
 		runes := []rune(word)
-		for j := 0; j < len(word); j++ {
+		for j := 0; j < len(runes); j++ {
 			if j == 0 {
 				runes[j] = unicode.ToUpper(runes[j])
 			} else {
