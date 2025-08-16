@@ -238,11 +238,18 @@ func (s *String) EnforceSwapcase() String {
 func (s String) Title() String {
 	words := strings.Fields(string(s))
 	for i, word := range words {
-		if len(word) > 0 {
-			runes := []rune(word)
-			runes[0] = unicode.ToUpper(runes[0])
-			words[i] = string(runes)
+		if len(word) == 0 {
+			continue
 		}
+		runes := []rune(word)
+		for j := 0; j < len(word); j++ {
+			if j == 0 {
+				runes[j] = unicode.ToUpper(runes[j])
+			} else {
+				runes[j] = unicode.ToLower(runes[j])
+			}
+		}
+		words[i] = string(runes)
 	}
 	return String(strings.Join(words, " "))
 }
