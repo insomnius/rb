@@ -8,7 +8,7 @@ Welcome to `rb`, where the simplicity and elegance of Ruby meet the performance 
 - **Familiarity:** Ideal for Ruby developers transitioning to Go or Go developers seeking more expressive tools.
 
 ## Features
-- Ruby-inspired `String`, `Integer`, `Float`, `Boolean`, `Symbol`, `Array`, `Hash`, and `Range` types.
+- Ruby-inspired `String`, `Integer`, `Float`, `Boolean`, `Array`, `Hash`, and `Range` types.
 - Comprehensive method coverage including `map`, `select`, `reject`, `find`, `any`, `all`, `none`, and more.
 - Seamless integration into your Go projects with idiomatic Go practices.
 
@@ -110,74 +110,22 @@ func main() {
 	rng := rb.NewRange(rb.Integer(1), rb.Integer(5))
 	fmt.Println("Range size:", rng.Size())      // Range size: 5
 	fmt.Println("Includes 3:", rng.Include(3)) // Includes 3: true
-
-	// Working with rb.Symbol
-	sym := rb.NewSymbol("hello")
-	fmt.Println("Symbol:", sym)                 // Symbol: hello
-	fmt.Println("Is alpha:", sym.IsAlpha())     // Is alpha: true
-	fmt.Println("Is numeric:", sym.IsNumeric()) // Is numeric: false
 }
 ```
 
-## Available Types and Methods
+## Available Types
 
-### String Methods
-- **Case manipulation**: `Upcase()`, `Downcase()`, `Capitalize()`, `Title()`, `Swapcase()`
-- **Whitespace handling**: `Strip()`, `Lstrip()`, `Rstrip()`
-- **Transformation**: `Reverse()`, `Gsub()`, `Sub()`
-- **Query methods**: `IsEmpty()`, `IsBlank()`, `StartWith()`, `EndWith()`, `Include()`
-- **Splitting**: `Split()`, `Lines()`, `Words()`, `Chars()`
-- **Conversion**: `ToI()`, `ToF()`
-- **Enforce variants**: `EnforceUpcase()`, `EnforceDowncase()`, `EnforceCapitalize()`, etc.
+The library provides the following Ruby-inspired types:
 
-### Integer Methods
-- **Mathematical**: `Power()`, `Sqrt()`, `Abs()`, `Factorial()`, `GCD()`, `LCM()`
-- **Query methods**: `IsOdd()`, `IsEven()`, `IsPositive()`, `IsNegative()`, `IsZero()`, `IsPrime()`
-- **Iteration**: `Times()`, `Upto()`, `Downto()`, `Step()`
-- **Utility**: `Next()`, `Pred()`, `Succ()`, `Divisors()`, `IsDivisibleBy()`
-- **Conversion**: `ToF()`, `ToS()`
+- **`rb.String`** - String manipulation and query methods
+- **`rb.Integer`** - Mathematical operations and iteration
+- **`rb.Float`** - Mathematical functions and rounding
+- **`rb.Boolean`** - Logical operations and conditional execution
+- **`rb.Array[T]`** - Collection methods and transformations
+- **`rb.Hash[K, V]`** - Key-value operations and iteration
+- **`rb.Range[T]`** - Range iteration and query methods
 
-### Float Methods
-- **Mathematical**: `Power()`, `Sqrt()`, `Sin()`, `Cos()`, `Tan()`, `Log()`, `Log10()`, `Exp()`
-- **Rounding**: `Ceil()`, `Floor()`, `Round()`
-- **Query methods**: `IsPositive()`, `IsNegative()`, `IsZero()`, `IsFinite()`, `IsInfinite()`, `IsNaN()`
-- **Utility**: `Min()`, `Max()`, `Clamp()`, `Between()`, `IsInteger()`
-- **Conversion**: `ToI()`, `ToS()`
-
-### Boolean Methods
-- **Logical operations**: `And()`, `Or()`, `Not()`, `Xor()`, `Nand()`, `Nor()`, `Xnor()`, `Implies()`
-- **Query methods**: `IsTrue()`, `IsFalse()`
-- **Conditional execution**: `IfTrue()`, `IfFalse()`, `If()`, `Ternary()`
-- **Conversion**: `ToI()`, `ToF()`, `ToS()`
-
-### Array Methods
-- **Transformation**: `Map()`, `Select()`, `Reject()`, `Reverse()`, `Sort()`, `Uniq()`, `Compact()`
-- **Query methods**: `Find()`, `Any()`, `All()`, `None()`, `First()`, `Last()`, `IsEmpty()`
-- **Iteration**: `Each()`, `EachWithIndex()`
-- **Utility**: `Take()`, `Drop()`, `Join()`, `Flatten()`
-- **Counting**: `Count()`, `Length()`, `Size()`
-
-### Hash Methods
-- **Access**: `Keys()`, `Values()`, `HasKey()`, `HasValue()`, `Get()`, `Fetch()`
-- **Modification**: `Set()`, `Delete()`, `Clear()`, `Merge()`, `Update()`, `Replace()`
-- **Transformation**: `Select()`, `Reject()`, `Map()`, `Invert()`, `Clone()`
-- **Iteration**: `Each()`, `EachKey()`, `EachValue()`
-- **Utility**: `Size()`, `Length()`, `IsEmpty()`, `Default()`
-
-### Range Methods
-- **Iteration**: `Each()`, `EachWithIndex()`, `Step()`
-- **Query methods**: `Include()`, `Cover()`, `IsEmpty()`, `Overlap()`, `Contains()`
-- **Utility**: `Min()`, `Max()`, `First()`, `Last()`, `Size()`, `Length()`
-- **Conversion**: `ToArray()`, `ToS()`
-
-### Symbol Methods
-- **Case manipulation**: `Upcase()`, `Downcase()`, `Capitalize()`, `Title()`, `Swapcase()`
-- **Whitespace handling**: `Strip()`, `Lstrip()`, `Rstrip()`
-- **Transformation**: `Reverse()`, `Gsub()`, `Sub()`
-- **Query methods**: `IsEmpty()`, `IsBlank()`, `IsPresent()`, `StartWith()`, `EndWith()`, `Include()`
-- **Character classification**: `IsAlpha()`, `IsAlphanumeric()`, `IsDigit()`, `IsSpace()`, `IsUpper()`, `IsLower()`
-- **Splitting**: `Split()`, `Lines()`, `Words()`, `Chars()`
-- **Conversion**: `ToI()`, `ToF()`, `ToS()`, `ToSym()`
+Each type provides a comprehensive set of methods that mirror Ruby's functionality while maintaining Go's type safety and performance characteristics.
 
 ## Documentation
 Explore the complete documentation and examples [here](https://pkg.go.dev/github.com/insomnius/rb).
