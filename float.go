@@ -1,3 +1,4 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
 import (
@@ -151,22 +152,20 @@ func (f Float) Max(other Float) Float {
 	return other
 }
 
-// Clamp clamps the Float between min and max values.
-// Example: Float(5.0).Clamp(0.0, 3.0) -> 3.0
-func (f Float) Clamp(min, max Float) Float {
-	if f < min {
-		return min
+// Clamp clamps the Float value between minVal and maxVal.
+func (f Float) Clamp(minVal, maxVal Float) Float {
+	if f < minVal {
+		return minVal
 	}
-	if f > max {
-		return max
+	if f > maxVal {
+		return maxVal
 	}
 	return f
 }
 
-// Between checks if the Float is between min and max (inclusive).
-// Example: Float(3.0).Between(1.0, 5.0) -> true
-func (f Float) Between(min, max Float) Boolean {
-	return Boolean(f >= min && f <= max)
+// Between checks if the Float value is between minVal and maxVal (inclusive).
+func (f Float) Between(minVal, maxVal Float) Boolean {
+	return Boolean(f >= minVal && f <= maxVal)
 }
 
 // IsInteger checks if the Float represents an integer value.

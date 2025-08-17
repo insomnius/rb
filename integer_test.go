@@ -306,7 +306,7 @@ func TestInteger_Between(t *testing.T) {
 
 func TestInteger_Times(t *testing.T) {
 	count := 0
-	Integer(5).Times(func(i Integer) {
+	Integer(5).Times(func(_ Integer) {
 		count++
 	})
 	

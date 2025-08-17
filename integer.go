@@ -1,3 +1,4 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
 import (
@@ -15,6 +16,7 @@ func (i Integer) IsOdd() Boolean {
 	return !i.IsEven()
 }
 
+// IsEven checks if the Integer is even.
 func (i Integer) IsEven() Boolean {
 	return Boolean(i%2 == 0)
 }
@@ -93,22 +95,21 @@ func (i Integer) Max(other Integer) Integer {
 	return other
 }
 
-// Clamp clamps the Integer between min and max values.
-// Example: Integer(5).Clamp(0, 3) -> 3
-func (i Integer) Clamp(min, max Integer) Integer {
-	if i < min {
-		return min
+// Clamp clamps the Integer value between minVal and maxVal.
+func (i Integer) Clamp(minVal, maxVal Integer) Integer {
+	if i < minVal {
+		return minVal
 	}
-	if i > max {
-		return max
+	if i > maxVal {
+		return maxVal
 	}
 	return i
 }
 
-// Between checks if the Integer is between min and max (inclusive).
+// Between checks if the Integer value is between minVal and maxVal (inclusive).
 // Example: Integer(3).Between(1, 5) -> true
-func (i Integer) Between(min, max Integer) Boolean {
-	return Boolean(i >= min && i <= max)
+func (i Integer) Between(minVal, maxVal Integer) Boolean {
+	return Boolean(i >= minVal && i <= maxVal)
 }
 
 // Times executes the given function n times.
@@ -119,27 +120,24 @@ func (i Integer) Times(fn func(Integer)) {
 	}
 }
 
-// Upto executes the given function for each integer from i up to max (inclusive).
-// Example: Integer(1).Upto(3, func(i Integer) { fmt.Println(i) })
-func (i Integer) Upto(max Integer, fn func(Integer)) {
-	for j := i; j <= max; j++ {
-		fn(j)
+// Upto iterates from the Integer value up to maxVal (inclusive).
+func (i Integer) Upto(maxVal Integer, fn func(Integer)) {
+	for val := i; val <= maxVal; val++ {
+		fn(val)
 	}
 }
 
-// Downto executes the given function for each integer from i down to min (inclusive).
-// Example: Integer(3).Downto(1, func(i Integer) { fmt.Println(i) })
-func (i Integer) Downto(min Integer, fn func(Integer)) {
-	for j := i; j >= min; j-- {
-		fn(j)
+// Downto iterates from the Integer value down to minVal (inclusive).
+func (i Integer) Downto(minVal Integer, fn func(Integer)) {
+	for val := i; val >= minVal; val-- {
+		fn(val)
 	}
 }
 
-// Step executes the given function for each integer from i to max, incrementing by step.
-// Example: Integer(0).Step(10, 2, func(i Integer) { fmt.Println(i) })
-func (i Integer) Step(max, step Integer, fn func(Integer)) {
-	for j := i; j <= max; j += step {
-		fn(j)
+// Step iterates from the Integer value up to maxVal with step increments.
+func (i Integer) Step(maxVal, step Integer, fn func(Integer)) {
+	for val := i; val <= maxVal; val += step {
+		fn(val)
 	}
 }
 

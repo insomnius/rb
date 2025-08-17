@@ -1,3 +1,4 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
 import (
@@ -74,12 +75,12 @@ func (r Range[T]) Include(value T) Boolean {
 			return Boolean(value >= r.Begin && value < r.End)
 		}
 		return Boolean(value >= r.Begin && value <= r.End)
-	} else {
-		if r.Exclusive {
-			return Boolean(value <= r.Begin && value > r.End)
-		}
-		return Boolean(value <= r.Begin && value >= r.End)
 	}
+
+	if r.Exclusive {
+		return Boolean(value <= r.Begin && value > r.End)
+	}
+	return Boolean(value <= r.Begin && value >= r.End)
 }
 
 // Cover checks if the given value is covered by the Range (alias for Include).
@@ -144,12 +145,12 @@ func (r Range[T]) Size() Integer {
 			return Integer(r.End - r.Begin)
 		}
 		return Integer(r.End - r.Begin + 1)
-	} else {
-		if r.Exclusive {
-			return Integer(r.Begin - r.End)
-		}
-		return Integer(r.Begin - r.End + 1)
 	}
+
+	if r.Exclusive {
+		return Integer(r.Begin - r.End)
+	}
+	return Integer(r.Begin - r.End + 1)
 }
 
 // Length is an alias for Size.
@@ -202,14 +203,12 @@ func (r Range[T]) Last() T {
 	return r.End
 }
 
-// Begin returns the beginning value of the Range.
-// Example: NewRange(Integer(1), Integer(5)).Begin() -> 1
+// BeginValue returns the beginning value of the Range.
 func (r Range[T]) BeginValue() T {
 	return r.Begin
 }
 
-// End returns the end value of the Range.
-// Example: NewRange(Integer(1), Integer(5)).End() -> 5
+// EndValue returns the end value of the Range.
 func (r Range[T]) EndValue() T {
 	return r.End
 }

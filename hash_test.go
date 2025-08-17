@@ -237,7 +237,7 @@ func TestHash_EnforceMerge(t *testing.T) {
 func TestHash_Select(t *testing.T) {
 	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3, "d": 4}
 
-	result := hash.Select(func(k String, v Integer) bool {
+	result := hash.Select(func(_ String, v Integer) bool {
 		return v > 2
 	})
 
@@ -257,12 +257,12 @@ func TestHash_Select(t *testing.T) {
 func TestHash_Reject(t *testing.T) {
 	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3, "d": 4}
 
-	result := hash.Reject(func(k String, v Integer) bool {
-		return v > 2
+	result := hash.Reject(func(_ String, v Integer) bool {
+		return v <= 2
 	})
 
-	// Check that only values <= 2 are kept
-	expected := map[string]int{"a": 1, "b": 2}
+	// Check that only values > 2 are kept (Reject returns pairs where predicate is false)
+	expected := map[string]int{"c": 3, "d": 4}
 	if len(result) != len(expected) {
 		t.Errorf("Reject() expected length %d, got %d", len(expected), len(result))
 	}
@@ -474,7 +474,7 @@ func TestHash_Replace(t *testing.T) {
 func TestHash_KeepIf(t *testing.T) {
 	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3, "d": 4}
 
-	hash.KeepIf(func(k String, v Integer) bool {
+	hash.KeepIf(func(_ String, v Integer) bool {
 		return v > 2
 	})
 
@@ -494,12 +494,12 @@ func TestHash_KeepIf(t *testing.T) {
 func TestHash_DeleteIf(t *testing.T) {
 	hash := Hash[String, Integer]{"a": 1, "b": 2, "c": 3, "d": 4}
 
-	hash.DeleteIf(func(k String, v Integer) bool {
-		return v > 2
+	hash.DeleteIf(func(_ String, v Integer) bool {
+		return v <= 2
 	})
 
-	// Check that only values <= 2 are kept
-	expected := map[string]int{"a": 1, "b": 2}
+	// Check that only values > 2 are kept (DeleteIf deletes entries where predicate is true)
+	expected := map[string]int{"c": 3, "d": 4}
 	if len(hash) != len(expected) {
 		t.Errorf("DeleteIf() expected length %d, got %d", len(expected), len(hash))
 	}

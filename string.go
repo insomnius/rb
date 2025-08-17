@@ -1,3 +1,4 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
 import (
@@ -54,7 +55,11 @@ func (s String) ToStr() String {
 	return s.ToS()
 }
 
+// Split splits the String by the given separator.
 func (s String) Split(sep String) Array[String] {
+	if sep == "" {
+		return s.Chars()
+	}
 	splittedString := strings.Split(string(s), string(sep))
 	arr := make(Array[String], len(splittedString))
 	for k, v := range splittedString {
