@@ -171,7 +171,7 @@ func TestInteger_ToS(t *testing.T) {
 func TestInteger_ToStr(t *testing.T) {
 	input := Integer(123)
 	result := input.ToStr()
-	
+
 	if result != input.ToS() {
 		t.Errorf("ToStr() should return same as ToS()")
 	}
@@ -306,10 +306,10 @@ func TestInteger_Between(t *testing.T) {
 
 func TestInteger_Times(t *testing.T) {
 	count := 0
-	Integer(5).Times(func(i Integer) {
+	Integer(5).Times(func(_ Integer) {
 		count++
 	})
-	
+
 	if count != 5 {
 		t.Errorf("Times() should execute 5 times, got %d", count)
 	}
@@ -320,7 +320,7 @@ func TestInteger_Upto(t *testing.T) {
 	Integer(1).Upto(3, func(i Integer) {
 		result = append(result, i)
 	})
-	
+
 	expected := []Integer{1, 2, 3}
 	if len(result) != len(expected) {
 		t.Errorf("Upto() expected length %d, got %d", len(expected), len(result))
@@ -337,7 +337,7 @@ func TestInteger_Downto(t *testing.T) {
 	Integer(3).Downto(1, func(i Integer) {
 		result = append(result, i)
 	})
-	
+
 	expected := []Integer{3, 2, 1}
 	if len(result) != len(expected) {
 		t.Errorf("Downto() expected length %d, got %d", len(expected), len(result))
@@ -354,7 +354,7 @@ func TestInteger_Step(t *testing.T) {
 	Integer(0).Step(10, 2, func(i Integer) {
 		result = append(result, i)
 	})
-	
+
 	expected := []Integer{0, 2, 4, 6, 8, 10}
 	if len(result) != len(expected) {
 		t.Errorf("Step() expected length %d, got %d", len(expected), len(result))
@@ -544,7 +544,7 @@ func TestInteger_Succ(t *testing.T) {
 	input := Integer(5)
 	result := input.Succ()
 	expected := input.Next()
-	
+
 	if result != expected {
 		t.Errorf("Succ() should return same as Next()")
 	}

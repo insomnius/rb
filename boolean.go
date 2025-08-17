@@ -1,12 +1,14 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
+// Boolean represents a boolean value with Ruby-inspired methods.
 type Boolean bool
 
+// ToS converts the Boolean to a String representation.
 func (b Boolean) ToS() String {
 	if b {
 		return "true"
 	}
-
 	return "false"
 }
 
@@ -39,16 +41,14 @@ func (b Boolean) Xor(other Boolean) Boolean {
 	return Boolean(bool(b) != bool(other))
 }
 
-// Nand performs logical NAND operation with another Boolean.
-// Example: Boolean(true).Nand(Boolean(true)) -> false
+// Nand performs logical NAND operation.
 func (b Boolean) Nand(other Boolean) Boolean {
-	return Boolean(!(bool(b) && bool(other)))
+	return Boolean(!bool(b) || !bool(other))
 }
 
-// Nor performs logical NOR operation with another Boolean.
-// Example: Boolean(true).Nor(Boolean(false)) -> false
+// Nor performs logical NOR operation.
 func (b Boolean) Nor(other Boolean) Boolean {
-	return Boolean(!(bool(b) || bool(other)))
+	return Boolean(!bool(b) && !bool(other))
 }
 
 // Xnor performs logical XNOR operation with another Boolean.

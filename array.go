@@ -1,3 +1,4 @@
+// Package rb provides Ruby-inspired utility methods for Go types.
 package rb
 
 import (

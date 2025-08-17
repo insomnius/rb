@@ -1,3 +1,4 @@
+// Package main demonstrates the usage of rb library with various examples.
 package main
 
 import (
@@ -175,7 +176,7 @@ func main() {
 	})
 
 	// Hash transformation
-	selectedHash := hash.Select(func(k rb.String, v rb.Integer) bool {
+	selectedHash := hash.Select(func(_ rb.String, v rb.Integer) bool {
 		return v > 2
 	})
 	fmt.Printf("Selected (value > 2): %v\n", selectedHash)

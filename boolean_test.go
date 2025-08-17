@@ -24,7 +24,7 @@ func TestBoolean_ToS(t *testing.T) {
 func TestBoolean_ToStr(t *testing.T) {
 	input := Boolean(true)
 	result := input.ToStr()
-	
+
 	if result != input.ToS() {
 		t.Errorf("ToStr() should return same as ToS()")
 	}
@@ -260,16 +260,16 @@ func TestBoolean_IfTrue(t *testing.T) {
 	Boolean(true).IfTrue(func() {
 		executed = true
 	})
-	
+
 	if !executed {
 		t.Error("IfTrue() should execute function when boolean is true")
 	}
-	
+
 	executed = false
 	Boolean(false).IfTrue(func() {
 		executed = true
 	})
-	
+
 	if executed {
 		t.Error("IfTrue() should not execute function when boolean is false")
 	}
@@ -280,16 +280,16 @@ func TestBoolean_IfFalse(t *testing.T) {
 	Boolean(false).IfFalse(func() {
 		executed = true
 	})
-	
+
 	if !executed {
 		t.Error("IfFalse() should execute function when boolean is false")
 	}
-	
+
 	executed = false
 	Boolean(true).IfFalse(func() {
 		executed = true
 	})
-	
+
 	if executed {
 		t.Error("IfFalse() should not execute function when boolean is true")
 	}
@@ -298,24 +298,24 @@ func TestBoolean_IfFalse(t *testing.T) {
 func TestBoolean_If(t *testing.T) {
 	trueExecuted := false
 	falseExecuted := false
-	
+
 	Boolean(true).If(
 		func() { trueExecuted = true },
 		func() { falseExecuted = true },
 	)
-	
+
 	if !trueExecuted || falseExecuted {
 		t.Error("If() should execute true function when boolean is true")
 	}
-	
+
 	trueExecuted = false
 	falseExecuted = false
-	
+
 	Boolean(false).If(
 		func() { trueExecuted = true },
 		func() { falseExecuted = true },
 	)
-	
+
 	if trueExecuted || !falseExecuted {
 		t.Error("If() should execute false function when boolean is false")
 	}
