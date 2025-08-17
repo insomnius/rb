@@ -1,5 +1,9 @@
 # rb: Ruby-Like Elegance in Go
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/insomnius/rb)](https://goreportcard.com/report/github.com/insomnius/rb)
+[![Go Coverage](https://codecov.io/gh/insomnius/rb/branch/main/graph/badge.svg)](https://codecov.io/gh/insomnius/rb)
+[![Go Lint](https://golangci.com/badges/github.com/insomnius/rb.svg)](https://golangci.com/r/github.com/insomnius/rb)
+
 Welcome to `rb`, where the simplicity and elegance of Ruby meet the performance and robustness of Go. If you're a Rubyist curious about Go, or a Gopher longing for Ruby's expressive methods, this library bridges the gap by bringing Ruby-inspired utility methods to Go's strong typing and concurrency capabilities.
 
 ## Why rb?
