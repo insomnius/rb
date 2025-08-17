@@ -243,7 +243,7 @@ func (s *String) EnforceSwapcase() String {
 func (s String) Title() String {
 	words := strings.Fields(string(s))
 	for i, word := range words {
-		if len(word) == 0 {
+		if word == "" {
 			continue
 		}
 		runes := []rune(word)
